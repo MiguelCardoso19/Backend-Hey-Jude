@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ALL">
+    <Appenders>
+
+        <RollingFile name="AccessRollingFile" fileName="${sys:catalina.home}/logs/heyjude/access/heyjude_access.log"
+                     filePattern="${sys:catalina.home}/logs/heyjude/access/$${date:yyyy}/$${date:MM}/heyjude_access_%d{dd}.log"
+                     append="false">
+            <PatternLayout>
+                <Pattern>%d [%t] - %p - %c - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO"/>
+        </RollingFile>
+
+        <RollingFile name="ErrorRollingFile" fileName="${sys:catalina.home}/logs/heyjude/error/heyjude_error.log"
+                     filePattern="${sys:catalina.home}/logs/heyjude/error/$${date:yyyy}/$${date:MM}/heyjude_error_%d{dd}.log"
+                     append="false">
+            <PatternLayout>
+                <Pattern>%d [%t] - %p - %c - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+        </RollingFile>
+
+        <RollingFile name="DebugRollingFile" fileName="${sys:catalina.home}/logs/heyjude/debug/heyjude_debug.log"
+                     filePattern="${sys:catalina.home}/logs/heyjude/debug/$${date:yyyy}/$${date:MM}/heyjude_debug_%d{dd}.log"
+                     append="false">
+            <PatternLayout>
+                <Pattern>%d [%t] - %p - %c - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="AccessRollingFile"/>
+            <AppenderRef ref="ErrorRollingFile"/>
+        </Root>
+
+        <Logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+           <AppenderRef ref="DebugRollingFile"/>
+        </Logger>
+    </Loggers>
+</Configuration>

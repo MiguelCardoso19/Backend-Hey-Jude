@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <thymeleaf th:replace="header :: header"/>
+</head>
+<body>
+<div class="container">
+
+    <div th:replace="action :: action"></div>
+
+    <div th:replace="kid/partial/details :: details"></div>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <h3>Parents:</h3>
+            <p>
+                <a class="btn btn-warning"
+                   th:disabled="${#lists.isEmpty(parents)}"
+                   th:href="${not #lists.isEmpty(parents)} ? @{'/kid/' + ${kid.id} + '/parent/transfer'}">Transfer</a>
+            </p>
+            <div th:if="${not #lists.isEmpty(parents)}">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <tr th:each="parent : ${parents}">
+                        <td th:text="${parent.name}"></td>
+                        <td th:text="${parent.email}"></td>
+                        <td th:text="${parent.password}"></td>
+                        <td><a class="btn btn-warning"
+                               th:href="@{'/kid/' + ${kid.id} + '/parent/' + ${parent.id} + '/edit'}">Edit</a>
+                        </td>
+                        <td><a class="btn btn-danger"
+                               th:href="@{'/kid/' + ${kid.id} + '/parent/' + ${parent.id} + '/delete'}">Delete</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <a class="btn btn-success" th:href="@{'/kid/' + ${kid.id} + '/parent/add'}">New Parent</a>
+            <a class="btn btn-info" th:href="@{'/kid/' + ${kid.id}}">Kid Page</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

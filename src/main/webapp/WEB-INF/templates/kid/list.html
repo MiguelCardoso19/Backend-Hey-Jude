@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <thymeleaf th:replace="header :: header" />
+</head>
+<body>
+<div class="container">
+
+    <div th:replace="action :: action"></div>
+
+    <h2>Kid List</h2>
+    <div th:if="${#lists.isEmpty(kids)}">
+        <p>No kids found</p>
+    </div>
+    <div th:if="${not #lists.isEmpty(kids)}">
+        <p>Kids found: <span th:text="${#lists.size(kids)}"></span></p>
+    </div>
+    <div th:if="${not #lists.isEmpty(kids)}">
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Show</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="kid : ${kids}">
+                <td th:text="${kid.id}"></td>
+                <td th:text="${kid.name}"></td>
+                <td th:text="${kid.age}"></td>
+                <td th:text="${kid.email}"></td>
+                <td th:text="${kid.password}"></td>
+                <td><a class="btn btn-success" th:href="@{'/kid/' + ${kid.id}}">View</a></td>
+                <td><a class="btn btn-warning" th:href="@{'/kid/' + ${kid.id} + '/edit'}">Edit</a></td>
+                <td><a class="btn btn-danger" th:href="@{'/kid/' + ${kid.id} + '/delete'}">Delete</a></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="col-sm-3">
+        <a class="btn btn-primary" th:href="@{/kid/add}">New kid</a>
+    </div>
+
+</div>
+</body>
+</html>
+
